@@ -140,7 +140,8 @@ class Combat():
                 self.second.damage(self.first)
                 self.first.damage(self.second)
             t += 1
-        return f'numbers of the battles {t}'
+        return f'numbers of battles {t}'
+
 
 k = Combat(pers, pers2)
 print(k.battle())
