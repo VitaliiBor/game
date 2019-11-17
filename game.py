@@ -1,7 +1,8 @@
+
+
+import random
 #возможность добавлять юниту оружие и доспехи. Это потребует отдельного класса отвечающего
 #за объект амуниции. Одевание на юнита обьекта амуниции производит пересчет характеристик юнита ()
-import random
-
 class Armor:
     def __init__(self, name, attack, defence):
         if all([
@@ -57,7 +58,9 @@ class Unit:
     def health_getter(self):
         return self._health
     def health_setter(self, health):
-        self._health = health if 0 <= health <= 100 else 0
+        self._health = int(health) if 0 <= health <= 100 else 0
+
+
     health = property(health_getter, health_setter)
 
     def attack_getter(self):
@@ -79,7 +82,6 @@ class Unit:
         damage = self.attack - protiv.defence
         if damage > 0:
             protiv.health = protiv.health - damage
-
             print(f'{self.name}  atacked {protiv.name}  leave health {protiv.health} ')
         else:
             print(f'{self.name} dont atack {protiv.name} with health {protiv.health}')
@@ -94,8 +96,8 @@ class Unit:
         else:
             raise TypeError
 
-pers = Unit('Cherv', 100, 10, 1)
-pers2 = Unit('Akula', 100, 14, 1)
+pers = Unit('Cherv', 100, 5, 2)
+pers2 = Unit('Akula', 100, 4, 2)
 
 pers = pers + slingshot + socks
 pers2 = pers2 + pistol +  socks
@@ -118,6 +120,17 @@ class Combat():
         t = 0
         list = (self.first, self.second)
         re = random.choice(list)
+        #розрахунок рандомних коефіцієнтів які будуть додані до атаки
+        at_first = random.uniform(1, 2)
+        at_second = random.uniform(1, 2)
+        self.first.attack = at_first * self.first.attack
+        self.second.attack = at_second * self.second.attack
+        # розрахунок рандомних коефіцієнтів які будуть додані до захисту
+        de_first = random.uniform(1, 2)
+        de_second = random.uniform(1, 2)
+        self.first.defence = de_first * self.first.defence
+        self.second.defence = de_second * self.second.defence
+
 
         while not self.first.health == 0 or self.second.health == 0:
             if re == self.first:
